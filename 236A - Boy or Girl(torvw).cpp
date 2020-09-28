@@ -1,34 +1,38 @@
 #include <iostream>
 #include <string>
-#include <tuple>
 
-
-std::tuple<unsigned, bool> occ(std::string s, char c)
+void occ(std::string& s, char c)
 {
 	unsigned oc{};
 	for (auto i = 0; i < s.size(); i++)
 	{
 		if (s[i] == c)
 			oc++;
+		if (oc > 1)
+		{
+			for (auto j = i; j < s.size(); j++)
+			{
+				s[j] = s[j + 1];
+			}
+			oc = 0;
+		}
 	}
-	if (oc > 1)
-		return std::make_tuple(oc, true);
-	else
-		return std::make_tuple(oc, false);
 }
 
 unsigned distinctL(std::string s)
 {
-	unsigned count{}, temp{}; size_t si{};
+	unsigned count{}, temp{};
 	for (auto i = 0; i < s.size(); i++)
 	{
-		if (auto [val, b] = occ(s, s[i]); !b)
+		occ(s, s[i]);
+	}
+	for (auto i = 0; i < s.size(); i++)
+	{
+		if (s[i] != '\0')
 			count++;
 	}
-	
 	return count;
 }
-
 
 
 int main()
@@ -38,10 +42,13 @@ int main()
 	{
 		std::cin >> s;
 	} while (s.size() < 1 || s.size() > 100);
-	std::cout << distinctL(s);
-	/*if (distinctL(s) % 2)
+	for (auto i = 0; i < s.size(); i++)
+	{
+		s[i] = (s[i] < 91 && s[i]>64) ? s[i] + 32 : s[i];
+	}
+	if (distinctL(s) % 2)
 		std::cout << "IGNORE HIM!";
 	else
-		std::cout << "CHAT WITH HER!";*/
+		std::cout << "CHAT WITH HER!";
 	return 0;
 }
