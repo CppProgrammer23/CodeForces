@@ -11,10 +11,7 @@ void occ(std::string& s, char c)
 			oc++;
 		if (oc > 1)
 		{
-			for (auto j = i; j < s.size(); j++)
-			{
-				s[j] = s[j + 1];
-			}
+			s[i] = '1';
 			oc = 0;
 		}
 	}
@@ -29,8 +26,7 @@ unsigned distinctL(std::string s)
 	}
 	for (auto i = 0; i < s.size(); i++)
 	{
-		if (s[i] != '\0')
-			count++;
+		(s[i] > 96 && s[i] < 123) ? count++ : count ;
 	}
 	return count;
 }
